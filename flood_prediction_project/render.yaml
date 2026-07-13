@@ -1,0 +1,18 @@
+# Render Blueprint - lets Render auto-configure this service.
+# In the Render Dashboard: New -> Blueprint -> select this repo.
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: rising-waters-flood-prediction
+    runtime: python
+    plan: free
+    branch: main
+    buildCommand: "pip install -r requirements.txt && python train_model.py"
+    startCommand: "gunicorn -w 2 -b 0.0.0.0:$PORT app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: FLASK_DEBUG
+        value: "0"
+    autoDeploy: true

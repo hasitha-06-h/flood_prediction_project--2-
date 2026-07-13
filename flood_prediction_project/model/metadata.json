@@ -1,0 +1,34 @@
+{
+  "best_model": "Decision Tree",
+  "accuracy": 95.65,
+  "feature_columns": [
+    "Temp",
+    "Humidity",
+    "Cloud Cover",
+    "ANNUAL",
+    "Jan-Feb",
+    "Mar-May",
+    "Jun-Sep",
+    "Oct-Dec",
+    "avgjune",
+    "sub"
+  ],
+  "all_results": {
+    "Decision Tree": {
+      "accuracy": 95.65,
+      "f1_score": 0.8
+    },
+    "Random Forest": {
+      "accuracy": 95.65,
+      "f1_score": 0.8
+    },
+    "KNN": {
+      "accuracy": 86.96,
+      "f1_score": 0.4
+    },
+    "XGBoost": {
+      "accuracy": 86.96,
+      "f1_score": 0.0
+    }
+  }
+}

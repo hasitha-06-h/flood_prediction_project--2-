@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+    <h1>Rising Waters</h1>
+    <p class="subtitle">A Machine Learning Approach to Flood Prediction</p>
+    <p class="hero-text">
+        Floods remain one of the most devastating natural disasters worldwide.
+        This system analyses meteorological data &mdash; rainfall, cloud cover,
+        and seasonal patterns &mdash; to predict flood likelihood and support
+        faster, better-informed disaster response.
+    </p>
+    <a href="{{ url_for('predict') }}" class="btn btn-primary">Run a Prediction</a>
+</section>
+
+<section class="cards">
+    <div class="card">
+        <div class="card-icon">&#128202;</div>
+        <h3>Model in Use</h3>
+        <p class="card-value">{{ metadata.best_model or "N/A" }}</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">&#127919;</div>
+        <h3>Test Accuracy</h3>
+        <p class="card-value">{{ metadata.accuracy }}%</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">&#128203;</div>
+        <h3>Input Features</h3>
+        <p class="card-value">{{ metadata.feature_columns|length if metadata.feature_columns else 10 }}</p>
+    </div>
+</section>
+
+<section class="info-panel">
+    <h2>How It Works</h2>
+    <ol class="steps">
+        <li><strong>Enter weather parameters</strong> &mdash; temperature, humidity, cloud cover, and rainfall figures for the region.</li>
+        <li><strong>Data is preprocessed and scaled</strong> using the same pipeline applied during training.</li>
+        <li><strong>The trained model generates a prediction</strong> &mdash; flood or no flood &mdash; with an estimated probability.</li>
+        <li><strong>Results are logged</strong> to the prediction history for later review and analysis.</li>
+    </ol>
+</section>
+
+{% if metadata.all_results %}
+<section class="info-panel">
+    <h2>Model Comparison</h2>
+    <table class="data-table">
+        <thead>
+            <tr><th>Model</th><th>Accuracy</th><th>F1 Score</th></tr>
+        </thead>
+        <tbody>
+            {% for name, res in metadata.all_results.items() %}
+            <tr class="{{ 'best-row' if name == metadata.best_model else '' }}">
+                <td>{{ name }}{% if name == metadata.best_model %} <span class="badge">Selected</span>{% endif %}</td>
+                <td>{{ res.accuracy }}%</td>
+                <td>{{ res.f1_score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p class="note">Metrics were computed on a held-out test split of the training dataset (see train_model.py).</p>
+</section>
+{% endif %}
+{% endblock %}

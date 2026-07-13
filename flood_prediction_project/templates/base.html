@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Rising Waters{% endblock %} | Flood Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-brand">
+            <span class="wave-icon">&#127754;</span>
+            <span>Rising Waters</span>
+        </div>
+        <nav class="navbar-links">
+            <a href="{{ url_for('home') }}" class="{{ 'active' if request.path == '/' else '' }}">Home</a>
+            <a href="{{ url_for('predict') }}" class="{{ 'active' if request.path == '/predict' else '' }}">New Prediction</a>
+            <a href="{{ url_for('history') }}" class="{{ 'active' if request.path == '/history' else '' }}">History</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Rising Waters &mdash; A Machine Learning Approach to Flood Prediction</p>
+    </footer>
+</body>
+</html>

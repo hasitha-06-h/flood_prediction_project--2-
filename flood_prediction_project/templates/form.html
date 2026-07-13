@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}New Prediction{% endblock %}
+{% block content %}
+<section class="form-section">
+    <h1>Enter Weather Parameters</h1>
+    <p class="subtitle-small">Provide current or forecasted readings for the region under assessment.</p>
+
+    <form method="POST" action="{{ url_for('predict') }}" class="prediction-form" novalidate>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="temp">Temperature (&deg;C)</label>
+                <input type="number" step="any" id="temp" name="temp" value="{{ form_data.temp or '' }}" placeholder="e.g. 29">
+                {% if errors and errors.temp %}<span class="error">{{ errors.temp }}</span>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="humidity">Humidity (%)</label>
+                <input type="number" step="any" id="humidity" name="humidity" value="{{ form_data.humidity or '' }}" placeholder="e.g. 74">
+                {% if errors and errors.humidity %}<span class="error">{{ errors.humidity }}</span>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="cloud_cover">Cloud Cover (%)</label>
+                <input type="number" step="any" id="cloud_cover" name="cloud_cover" value="{{ form_data.cloud_cover or '' }}" placeholder="e.g. 36">
+                {% if errors and errors.cloud_cover %}<span class="error">{{ errors.cloud_cover }}</span>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="annual">Annual Rainfall (mm)</label>
+                <input type="number" step="any" id="annual" name="annual" value="{{ form_data.annual or '' }}" placeholder="e.g. 3200">
+                {% if errors and errors.annual %}<span class="error">{{ errors.annual }}</span>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="jan_feb">Jan&ndash;Feb Rainfall (mm)</label>
+                <input type="number" step="any" id="jan_feb" name="jan_feb" value="{{ form_data.jan_feb or '' }}" placeholder="e.g. 40">
+                {% if errors and errors.jan_feb %}<span class="error">{{ errors.jan_feb }}</span>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="mar_may">Mar&ndash;May Rainfall (mm)</label>
+                <input type="number" step="any" id="mar_may" name="mar_may" value="{{ form_data.mar_may or '' }}" placeholder="e.g. 350">
+                {% if errors and errors.mar_may %}<span class="error">{{ errors.mar_may }}</span>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="jun_sep">Jun&ndash;Sep Rainfall (mm)</label>
+                <input type="number" step="any" id="jun_sep" name="jun_sep" value="{{ form_data.jun_sep or '' }}" placeholder="e.g. 2200">
+                {% if errors and errors.jun_sep %}<span class="error">{{ errors.jun_sep }}</span>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="oct_dec">Oct&ndash;Dec Rainfall (mm)</label>
+                <input type="number" step="any" id="oct_dec" name="oct_dec" value="{{ form_data.oct_dec or '' }}" placeholder="e.g. 600">
+                {% if errors and errors.oct_dec %}<span class="error">{{ errors.oct_dec }}</span>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="avgjune">Average June Rainfall (mm)</label>
+                <input type="number" step="any" id="avgjune" name="avgjune" value="{{ form_data.avgjune or '' }}" placeholder="e.g. 220">
+                {% if errors and errors.avgjune %}<span class="error">{{ errors.avgjune }}</span>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="sub">Sub (Seasonal Aggregate)</label>
+                <input type="number" step="any" id="sub" name="sub" value="{{ form_data.sub or '' }}" placeholder="e.g. 440">
+                {% if errors and errors.sub %}<span class="error">{{ errors.sub }}</span>{% endif %}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Predict Flood Risk</button>
+    </form>
+</section>
+{% endblock %}

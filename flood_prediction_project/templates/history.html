@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Prediction History{% endblock %}
+{% block content %}
+<section class="history-section">
+    <div class="history-header">
+        <h1>Prediction History</h1>
+        {% if rows %}
+        <form method="POST" action="{{ url_for('clear_history') }}" onsubmit="return confirm('Clear all prediction history?');">
+            <button type="submit" class="btn btn-danger">Clear History</button>
+        </form>
+        {% endif %}
+    </div>
+
+    {% if rows %}
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Temp</th>
+                    <th>Humidity</th>
+                    <th>Cloud Cover</th>
+                    <th>Annual</th>
+                    <th>Prediction</th>
+                    <th>Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row['timestamp'] }}</td>
+                    <td>{{ row['temp'] }}</td>
+                    <td>{{ row['humidity'] }}</td>
+                    <td>{{ row['cloud_cover'] }}</td>
+                    <td>{{ row['annual'] }}</td>
+                    <td>
+                        {% if row['prediction'] == 1 %}
+                        <span class="badge badge-flood">Flood</span>
+                        {% else %}
+                        <span class="badge badge-safe">No Flood</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ (row['probability'] * 100)|round(2) }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="empty-state">No predictions have been made yet. <a href="{{ url_for('predict') }}">Run your first prediction.</a></p>
+    {% endif %}
+</section>
+{% endblock %}

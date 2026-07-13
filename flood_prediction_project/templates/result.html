@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Prediction Result{% endblock %}
+{% block content %}
+<section class="result-section">
+    {% if prediction == 1 %}
+    <div class="result-card result-flood">
+        <div class="result-icon">&#9888;&#65039;</div>
+        <h1>Flood Risk Detected</h1>
+        <p class="result-probability">Estimated probability: <strong>{{ probability }}%</strong></p>
+        <p class="result-message">
+            The model predicts a heightened likelihood of flooding based on the
+            provided readings. Consider issuing advisories and preparing
+            response resources.
+        </p>
+    </div>
+    {% else %}
+    <div class="result-card result-safe">
+        <div class="result-icon">&#9989;</div>
+        <h1>No Flood Risk Detected</h1>
+        <p class="result-probability">Estimated probability: <strong>{{ probability }}%</strong></p>
+        <p class="result-message">
+            Based on the provided readings, the model does not predict
+            flooding for this region at this time. Continue routine monitoring.
+        </p>
+    </div>
+    {% endif %}
+
+    <div class="info-panel">
+        <h2>Input Summary</h2>
+        <table class="data-table">
+            <tbody>
+                <tr><td>Temperature</td><td>{{ form_data.temp }} &deg;C</td></tr>
+                <tr><td>Humidity</td><td>{{ form_data.humidity }} %</td></tr>
+                <tr><td>Cloud Cover</td><td>{{ form_data.cloud_cover }} %</td></tr>
+                <tr><td>Annual Rainfall</td><td>{{ form_data.annual }} mm</td></tr>
+                <tr><td>Jan&ndash;Feb Rainfall</td><td>{{ form_data.jan_feb }} mm</td></tr>
+                <tr><td>Mar&ndash;May Rainfall</td><td>{{ form_data.mar_may }} mm</td></tr>
+                <tr><td>Jun&ndash;Sep Rainfall</td><td>{{ form_data.jun_sep }} mm</td></tr>
+                <tr><td>Oct&ndash;Dec Rainfall</td><td>{{ form_data.oct_dec }} mm</td></tr>
+                <tr><td>Average June Rainfall</td><td>{{ form_data.avgjune }} mm</td></tr>
+                <tr><td>Sub (Seasonal Aggregate)</td><td>{{ form_data.sub }}</td></tr>
+                <tr><td>Model Used</td><td>{{ metadata.best_model }}</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="result-actions">
+        <a href="{{ url_for('predict') }}" class="btn btn-secondary">New Prediction</a>
+        <a href="{{ url_for('history') }}" class="btn btn-primary">View History</a>
+    </div>
+</section>
+{% endblock %}
